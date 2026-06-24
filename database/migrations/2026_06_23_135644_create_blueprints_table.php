@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('tone');
             $table->integer('max_hashtags')->default(2);
-            $table->integer('max_charaters')->default(250);
+            $table->integer('max_characters')->default(250);
             $table->string('regle_supp')->nullable();
             $table->timestamps();
         });

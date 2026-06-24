@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('text_brut_id')->unique()->constrained()->cascadeOnDelete();
             $table->string('hook_propose')->nullable();
             $table->json('body_points')->nullable();
-            $table->integer('thechnical_readability_score')->nullable();
+            $table->integer('technical_readability_score')->nullable();
             $table->json('suggested_hashtags')->nullable();
             $table->text('tone_compliance_justification')->nullable();
             $table->text('payload_brut')->nullable();
