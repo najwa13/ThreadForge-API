@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Post;
+use App\Models\TextBrut;
 
 
 class Blueprint extends Model
@@ -23,5 +25,10 @@ class Blueprint extends Model
 
     public function textBruts(){
         return $this->hasMany(TextBrut::class);
+    }
+
+     public function posts()
+    {
+        return $this->hasManyThrough(Post::class, TextBrut::class);
     }
 }
