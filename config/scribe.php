@@ -32,22 +32,11 @@ return [
     'routes' => [
         [
             'match' => [
-                // Match only routes whose paths match this pattern (use * as a wildcard to match any characters). Example: 'users/*'.
                 'prefixes' => ['api/*'],
-
-                // Match only routes whose domains match this pattern (use * as a wildcard to match any characters). Example: 'api.*'.
                 'domains' => ['*'],
             ],
-
-            // Include these routes even if they did not match the rules above.
-            'include' => [
-                // 'users.index', 'POST /new', '/auth/*'
-            ],
-
-            // Exclude these routes even if they matched the rules above.
-            'exclude' => [
-                // 'GET /health', 'admin.*'
-            ],
+            'include' => [],
+            'exclude' => [],
         ],
     ],
 
@@ -105,11 +94,11 @@ return [
     // How is your API authenticated? This information will be used in the displayed docs, generated examples and response calls.
     'auth' => [
         // Set this to true if ANY endpoints in your API use authentication.
-        'enabled' => false,
+        'enabled' => true,
 
         // Set this to true if your API should be authenticated by default. If so, you must also set `enabled` (above) to true.
         // You can then use @unauthenticated or @authenticated on individual endpoints to change their status from the default.
-        'default' => false,
+        'default' => true,
 
         // Where is the auth value meant to be sent in a request?
         'in' => AuthIn::BEARER->value,
@@ -224,7 +213,7 @@ return [
             ]),
         ],
         'urlParameters' => [
-            ...Defaults::URL_PARAMETERS_STRATEGIES,
+            Strategies\UrlParameters\GetFromUrlParamTag::class,
         ],
         'queryParameters' => [
             ...Defaults::QUERY_PARAMETERS_STRATEGIES,
@@ -236,7 +225,6 @@ return [
             Defaults::RESPONSES_STRATEGIES,
             Strategies\Responses\ResponseCalls::withSettings(
                 only: ['GET *'],
-                // Recommended: disable debug mode in response calls to avoid error stack traces in responses
                 config: [
                     'app.debug' => false,
                 ]

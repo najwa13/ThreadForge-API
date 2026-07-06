@@ -12,6 +12,28 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * @group Authentication
+     *
+     * Register a new user account.
+     *
+     * @bodyParam name string required The user's name. Example: John Doe
+     * @bodyParam email string required The user's email. Example: john@example.com
+     * @bodyParam password string required The password (min 8 chars). Example: secret123
+     * @bodyParam password_confirmation string required Must match password. Example: secret123
+     *
+     * @responseField message string The success message.
+     * @responseField user object The created user.
+     * @responseField token string The API token.
+     *
+     * @response 201 {
+     *   "message": "Utilisateur créé avec succès.",
+     *   "user": { "id": 1, "name": "John Doe", "email": "john@example.com", "created_at": "2026-06-22T10:00:00.000000Z" },
+     *   "token": "1|abc123..."
+     * }
+     *
+     * @unauthenticated
+     */
     public function register(RegisterRequest $request)
     {
         $user = User::create($request->validated());
@@ -24,6 +46,30 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * @group Authentication
+     *
+     * Login with email and password to receive an API token.
+     *
+     * @bodyParam email string required The user's email. Example: john@example.com
+     * @bodyParam password string required The user's password. Example: secret123
+     *
+     * @responseField message string The success message.
+     * @responseField user object The authenticated user.
+     * @responseField token string The API token.
+     *
+     * @response 200 {
+     *   "message": "Connexion réussie.",
+     *   "user": { "id": 1, "name": "John Doe", "email": "john@example.com", "created_at": "2026-06-22T10:00:00.000000Z" },
+     *   "token": "1|abc123..."
+     * }
+     *
+     * @response 401 {
+     *   "message": "Identifiants invalides."
+     * }
+     *
+     * @unauthenticated
+     */
     public function login(LoginRequest $request)
     {
         $data = $request->validated();
@@ -45,6 +91,15 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @group Authentication
+     *
+     * Logout and revoke the current access token.
+     *
+     * @response 200 {
+     *   "message": "Déconnecté avec succès."
+     * }
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

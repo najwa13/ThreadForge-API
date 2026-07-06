@@ -11,7 +11,19 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @group Generated Posts
+     *
+     * List all generated posts for the authenticated user.
+     *
+     * @responseField data array The list of posts.
+     * @responseField data[].id int The post ID.
+     * @responseField data[].text_brut_id int The linked raw content ID.
+     * @responseField data[].hook_propose string The generated hook.
+     * @responseField data[].body_points array The body points.
+     * @responseField data[].technical_readability_score int Readability score (0-100).
+     * @responseField data[].suggested_hashtags array Suggested hashtags.
+     * @responseField data[].tone_compliance_justification string Why it complies with the blueprint.
+     * @responseField data[].status string The post status (draft, archived, posted).
      */
     public function index(Request $request)
     {
@@ -28,7 +40,19 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @group Generated Posts
+     *
+     * Get a single generated post by ID.
+     *
+     * @urlParameter post int The post ID. Example: 1
+     *
+     * @responseField id int The post ID.
+     * @responseField hook_propose string The generated hook.
+     * @responseField body_points array The body points.
+     * @responseField technical_readability_score int Readability score (0-100).
+     * @responseField suggested_hashtags array Suggested hashtags.
+     * @responseField tone_compliance_justification string Why it complies with the blueprint.
+     * @responseField status string The post status.
      */
     public function show(Post $post)
     {
@@ -40,7 +64,15 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @group Generated Posts
+     *
+     * Update a post (typically to change its status).
+     *
+     * @urlParameter post int The post ID. Example: 1
+     * @bodyParam status string required The new status. Must be one of: draft, archived, posted. Example: posted
+     *
+     * @responseField message string The success message.
+     * @responseField data object The updated post.
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
@@ -55,7 +87,15 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @group Generated Posts
+     *
+     * Delete a generated post.
+     *
+     * @urlParameter post int The post ID. Example: 1
+     *
+     * @response 200 {
+     *   "message": "Post supprimé avec succès."
+     * }
      */
     public function destroy(Post $post)
     {
