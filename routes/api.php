@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BlueprintController;
 use App\Http\Controllers\Api\TextBrutController;
 use App\Http\Controllers\Api\GeneratePostController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\GhostwriterController;
 
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -18,4 +19,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('text-bruts', TextBrutController::class);
     Route::post('/text-bruts/{textBrut}/generate', [GeneratePostController::class, 'generate']);
     Route::apiResource('posts', PostController::class);
+    Route::post('/ghostwriter/chat', [GhostwriterController::class, 'chat']);
 });
