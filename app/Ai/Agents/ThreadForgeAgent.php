@@ -8,8 +8,8 @@ use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasStructuredOutput;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Contracts\Tool;
-use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
+use Laravel\Ai\Concerns\RemembersConversations;
 use App\Ai\Tools\GetCampaignRules;
 use App\Ai\Tools\GetPostHistory;
 use Laravel\Ai\Attributes\Model;
@@ -25,7 +25,7 @@ use Stringable;
 #[MaxTokens(2048)]
 class ThreadForgeAgent implements Agent, Conversational, HasStructuredOutput, HasTools
 {
-    use Promptable;
+    use Promptable, RemembersConversations;
 
     /**
      * Get the instructions that the agent should follow.
@@ -52,16 +52,6 @@ Your responsibilities are:
 - Always use available tools when campaign rules or post history are required.
 - Always return a valid structured JSON response.
 PROMPT;
-    }
-
-    /**
-     * Get the list of messages comprising the conversation so far.
-     *
-     * @return Message[]
-     */
-    public function messages(): iterable
-    {
-        return [];
     }
 
     /**
