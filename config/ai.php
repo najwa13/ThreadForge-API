@@ -20,6 +20,15 @@ return [
     'default_for_embeddings' => 'openai',
     'default_for_reranking' => 'cohere',
 
+    'conversations' => [
+        'connection' => null,
+        'tables' => [
+            'conversations' => 'agent_conversations',
+            'messages' => 'agent_conversation_messages',
+        ],
+        'generate_title' => true,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Caching
