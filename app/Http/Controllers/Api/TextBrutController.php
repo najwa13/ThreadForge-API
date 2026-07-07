@@ -29,6 +29,7 @@ class TextBrutController extends Controller
 
         $textBruts = $request->user()
             ->textBruts()
+            ->with('blueprint')
             ->latest()
             ->get();
 
