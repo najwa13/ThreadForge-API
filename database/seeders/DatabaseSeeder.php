@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blueprint;
+use App\Models\Post;
+use App\Models\TextBrut;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,11 +18,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        $blueprints = Blueprint::factory(2)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $textBruts = TextBrut::factory(3)->create([
+            'user_id' => $user->id,
+            'blueprint_id' => $blueprints->first()->id,
+            'status' => 'processed',
+        ]);
+
+        Post::factory(2)->create([
+            'text_brut_id' => $textBruts->first()->id,
+            'status' => 'draft',
         ]);
     }
 }
